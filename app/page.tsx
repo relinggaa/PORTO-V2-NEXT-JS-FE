@@ -5,9 +5,10 @@ import LandingPage from "./pages/LandingPage";
 import NavbarLanding from "@/components/ui/NavbarLanding";
 export default function Home() {
   return (
-    <div className="bg-black text-white">
-      <NavbarLanding />
+    <div>
+
       <LandingPage />
+      
     </div>
   );
 }

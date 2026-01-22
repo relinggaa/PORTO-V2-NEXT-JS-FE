@@ -173,11 +173,11 @@ export const Header = () => {
 
           <TextType
             text={["WELCOME TO MY PORTOFOLIO", "LET'S EXPLORE MY WORLD"]}
-            typingSpeed={70}
-            pauseDuration={1800}
-            showCursor={false}
+            typingSpeed={75}
+            pauseDuration={1500}
+            showCursor
             cursorCharacter="_"
-            deletingSpeed={45}
+            deletingSpeed={50}
             cursorBlinkDuration={0.5}
           />
 

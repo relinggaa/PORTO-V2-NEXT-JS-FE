@@ -173,24 +173,24 @@ const TextType = ({
   return createElement(
     Component,
     {
-      className: `block whitespace-pre-wrap tracking-tight ${className}`,
+      className: `block w-full min-h-[3rem] md:min-h-[5.5rem] tracking-tight ${className}`,
       ...props
     },
     <span
       ref={containerRef}
-      className="inline-block min-h-[3rem] md:min-h-[5.5rem] text-2xl md:text-7xl font-bold leading-tight tracking-tight bg-gradient-to-b from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]"
+      className="inline text-2xl md:text-7xl font-bold leading-tight tracking-tight bg-gradient-to-b from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]"
       style={{ color: getCurrentTextColor() || undefined }}
     >
       {displayedText}
-    </span>,
-   showCursor && (
-    <span
-      ref={cursorRef}
-      className={` text-4xl ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}
-    >
-      {cursorCharacter}
+      {showCursor && (
+        <span
+          ref={cursorRef}
+          className={`inline text-4xl align-baseline ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}
+        >
+          {cursorCharacter}
+        </span>
+      )}
     </span>
-  )
   );
 };
 

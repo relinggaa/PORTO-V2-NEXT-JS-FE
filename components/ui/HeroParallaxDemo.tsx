@@ -8,111 +8,48 @@ export function HeroParallaxDemo() {
 }
 export const products = [
   {
-    title: "Moonbeam",
-    description: "Moonbeam is a platform for creating and sharing moonbeam projects.",
-    link: "https://gomoonbeam.com",
+    title: "FixYou",
+    description: "FixYou is a web-based mental health platform developed by the Beyond Zero team, aimed at providing an adaptive, accessible, and AI-integrated mental health support solution. The application combines AI Voice Command, AI Chatbot (Gemini), Mood Tracker, interactive Journaling, Gamification, and access to professional psychologists into one unified ecosystem. FixYou is developed using Laravel for the backend, ReactJS and InertiaJS for the frontend, and TailwindCSS for styling.",
+    link: "https://fixyou.my.id/",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
+      "/img/fixyou.png",
   },
   {
-    title: "Cursor",
-    description: "Cursor is a platform for creating and sharing cursor projects.",
-    link: "https://cursor.so",
+    title: "Sagara Daily Checkup",
+    description: "Ariq Hisyam Nabil and I developed a web-based application for our major Web Design and Programming assignment titled Sagara Daily CheckUp. It is an integrated platform that facilitates real-time, secure, and data-driven fleet management, supported by Artificial Intelligence (LLM – Gemini API). If you need login access, please DM me on Instagram @relinggaa. Tech Stack used - Frontend: React.js, Vite.js, Tailwind CSS, Inertia.js (UI Libraries: React bits, shadcn/ui, component land). Backend: Laravel (MVC Architecture). Database: MySQL. AI Integration: Gemini API (LLM).",
+    link: "https://sagaradailycheckup.my.id",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
+      "img/sagaradailycheckup.png",
   },
   {
-    title: "Rogue",
-    description: "Rogue is a platform for creating and sharing rogue projects.",
-    link: "https://userogue.com",
+    title: "Edukids",
+    description: "My team (SFRZ) and I are excited to share our educational project, Edukids – a creative educational platform for children. Born from our passion to create a fun, interactive, and educational learning experience, we utilized modern technologies like React.js, Tailwind CSS, Magic UI, and Shadcn UI to deliver an attractive and responsive design. We focused on using gradient colors to create a cheerful atmosphere that children love, making the learning process more enjoyable for them.",
+    link: "https://edukids-interium.vercel.app/",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/rogue.png",
+      "img/edukids.png",
   },
 
   {
-    title: "Editorially",
-    description: "Editorially is a platform for creating and sharing editorially projects.",
-    link: "https://editorially.org",
+    title: "Bookkeeping Management System (BMS)",
+    description: "This project was developed by the SFRZ Development team for Tanjungpura University, specifically for the Civil Engineering study program. The application is designed for use in the university's Civil Engineering laboratory to support testing and practical activities. Developed using the Laravel framework for the backend and Vanilla JS for the frontend, it ensures stability, flexibility, and ease of maintenance.",
+    link: "/",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editorially.png",
+      "img/bmsuntan.png",
   },
   {
-    title: "Editrix AI",
-    description: "Editrix AI is a platform for creating and sharing editrix ai projects.",
-    link: "https://editrix.ai",
+    title: "CASAZ-CO",
+    description: "I'm thrilled to share my latest freelance project—building the official website for Casaz Co, a perfume company. 🚀✨ Utilizing modern web technologies like ReactJS, Tailwind CSS, and ViteJS, I created a fast, responsive, and visually appealing company profile. ReactJS enabled a dynamic UI, while Tailwind CSS facilitated an elegant design aligning with Casaz Co's brand. ViteJS ensured fast builds and optimal performance.",
+    link: "https://casaz-co.vercel.app/",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/editrix.png",
+      "img/casaz.png",
   },
   {
-    title: "Pixel Perfect",
-    description: "Pixel Perfect is a platform for creating and sharing pixel perfect projects.",
-    link: "https://app.pixelperfect.quest",
+    title: "Website Travel GerbangEast With React js and Talwind css",
+    description: "I am excited to share my latest freelance project—building the official website for GerbangEast, a company focused on innovative tech solutions. 🚀✨ I implemented modern technologies like ReactJS, Tailwind CSS, and ViteJS to deliver an elegant, modern, and responsive company profile. ReactJS allowed for an interactive interface, while Tailwind CSS provided flexibility for a minimalist design. ViteJS ensured fast load times and optimal performance for a smooth browsing experience.",
+    link: "https://gerbang-east.vercel.app/",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/pixelperfect.png",
+      "img/gerbangeast.png",
   },
 
-  {
-    title: "Algochurn",
-    description: "Algochurn is a platform for creating and sharing algochurn projects.",
-    link: "https://algochurn.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/algochurn.png",
-  },
-  {
-    title: "Aceternity UI",
-    description: "Aceternity UI is a platform for creating and sharing aceternity ui projects.",
-    link: "https://ui.aceternity.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
-  },
-  {
-    title: "Tailwind Master Kit",
-    description: "Tailwind Master Kit is a platform for creating and sharing tailwind master kit projects.",
-    link: "https://tailwindmasterkit.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png",
-  },
-  {
-    title: "SmartBridge",
-    description: "SmartBridge is a platform for creating and sharing smartbridge projects.",
-    link: "https://smartbridgetech.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/smartbridge.png",
-  },
-  {
-    title: "Renderwork Studio",
-    description: "Renderwork Studio is a platform for creating and sharing renderwork studio projects.",
-    link: "https://renderwork.studio",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/renderwork.png",
-  },
 
-  {
-    title: "Creme Digital",
-    description: "Creme Digital is a platform for creating and sharing cremedigital projects.",
-    link: "https://cremedigital.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cremedigital.png",
-  },
-  {
-    title: "Golden Bells Academy",
-    description: "Golden Bells Academy is a platform for creating and sharing golden bells academy projects.",
-    link: "https://goldenbellsacademy.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png",
-  },
-  {
-    title: "Invoker Labs",
-    description: "Invoker Labs is a platform for creating and sharing invoker labs projects.",
-    link: "https://invoker.lol",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/invoker.png",
-  },
-  {
-    title: "E Free Invoice",
-    description: "E Free Invoice is a platform for creating and sharing efreeinvoice projects.",
-    link: "https://efreeinvoice.com",
-    thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
-  },
 ];

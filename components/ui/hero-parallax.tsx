@@ -10,8 +10,10 @@ import {
   useTransform,
   useSpring,
   MotionValue,
+  AnimatePresence,
 } from "motion/react";
 import TextType from "./TextType";
+import { useProjectModal } from "@/app/hook/ProjectModal/useProjectModal";
 
 
 
@@ -26,10 +28,20 @@ export const HeroParallax = ({
 
   }[];
 }) => {
-  const firstRow = products.slice(0, 5);
-  const secondRow = products.slice(5, 10);
-  const thirdRow = products.slice(10, 15);
+  const getRepeatedProducts = (count: number) => {
+    const repeated = [];
+    while (repeated.length < count) {
+      repeated.push(...products);
+    }
+    return repeated.slice(0, count);
+  };
+
+  const allProducts = getRepeatedProducts(15);
+  const firstRow = allProducts.slice(0, 5);
+  const secondRow = allProducts.slice(5, 10);
+  const thirdRow = allProducts.slice(10, 15);
   const ref = React.useRef(null);
+  const { isOpen, openModal, closeModal } = useProjectModal();
 
   const [hasScrolled, setHasScrolled] = React.useState(false);
 
@@ -41,7 +53,7 @@ export const HeroParallax = ({
         setHasScrolled(false);
       }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasScrolled]);
@@ -80,76 +92,180 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[330vh] overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[330vh] overflow-hidden antialiased relative flex flex-col self-auto"
     >
       <Header />
+      <div className="flex-1 w-full [perspective:1000px] [transform-style:preserve-3d]">
+        <motion.div
+          style={{
+            rotateX,
+            rotateZ,
+            translateY,
+            opacity,
+          }}
+          className="relative z-0"
+        >
+          {hasScrolled && (
+            <div className="mb-8 px-4 sm:px-6 md:px-8">
+              <ScrollVelocity
+                texts={["LET'S CHECK MY PROJECT"]}
+                scrollerStyle={{ color: "black", WebkitTextStroke: "1px rgba(255,255,255,255)" }}
+                velocity={100}
+                damping={50}
+                stiffness={400}
+                numCopies={6}
+              />
+              <ScrollVelocity
+                className="mt-10"
+                scrollerStyle={{ color: "black", WebkitTextStroke: "1px rgba(255,255,255,255)" }}
+                texts={["THESE ARE THE PROJECTS I'VE WORKED ON"]}
+
+                velocity={-100}
+                damping={50}
+                stiffness={400}
+                numCopies={6}
+              />
+
+
+            </div>
+          )}
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+
+            {firstRow.map((product) => (
+
+              <ProductCard
+
+                product={product}
+                translate={translateX}
+                key={product.title}
+              />
+            ))}
+          </motion.div>
+          <motion.div className="flex flex-row  mb-20 space-x-20 ">
+            {secondRow.map((product) => (
+              <ProductCard
+                product={product}
+                translate={translateXReverse}
+                key={product.title}
+              />
+            ))}
+          </motion.div>
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+            {thirdRow.map((product) => (
+              <ProductCard
+                product={product}
+                translate={translateX}
+                key={product.title}
+              />
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+
       <motion.div
-        style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
-        }}
-        className="relative z-0"
+        style={{ opacity: useSpring(useTransform(scrollYProgress, [0, 0.2], [0, 1]), springConfig) }}
+        className="absolute bottom-10 left-0 w-full flex justify-center z-50"
       >
-        {hasScrolled && (
-          <div className="mb-8 px-4 sm:px-6 md:px-8">
-            <ScrollVelocity
-              texts={["LET'S CHECK MY PROJECT"]}
-              scrollerStyle={{ color: "black", WebkitTextStroke: "1px rgba(255,255,255,255)" }}
-              velocity={100}
-              damping={50}
-              stiffness={400}
-              numCopies={6}
-            />
-            <ScrollVelocity
-              className="mt-10"
-              scrollerStyle={{ color: "black", WebkitTextStroke: "1px rgba(255,255,255,255)" }}
-              texts={["THESE ARE THE PROJECTS I'VE WORKED ON"]}
-            
-              velocity={-100}
-              damping={50}
-              stiffness={400}
-              numCopies={6}
-            />
-    
-       
-          </div>
-        )}
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-         
-          {firstRow.map((product) => (
-            
-            <ProductCard
-            
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
-          ))}
-        </motion.div>
-        <motion.div className="flex flex-row  mb-20 space-x-20 ">
-          {secondRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateXReverse}
-              key={product.title}
-            />
-          ))}
-        </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title}
-            />
-          ))}
-        </motion.div>
-        
+        <button
+          onClick={openModal}
+          className="px-12 py-4 bg-white text-black font-bold rounded-full hover:bg-neutral-200 transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+        >
+          Show More Projects
+        </button>
       </motion.div>
-        
-    </div>  
+
+      <AnimatePresence>
+        {isOpen && (
+          <ProjectModal
+            isOpen={isOpen}
+            onClose={closeModal}
+            products={products}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const ProjectModal = ({
+  isOpen,
+  onClose,
+  products
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  products: any[]
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        className="relative w-full max-w-6xl h-[85vh] bg-black border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(255,255,255,0.05)] flex flex-col"
+      >
+        {/* Header */}
+        <div className="p-8 border-b border-white/5 flex justify-between items-center bg-zinc-950/50">
+          <div>
+            <h3 className="text-3xl font-black text-white italic tracking-tighter">ALL PROJECTS</h3>
+            <p className="text-neutral-500 text-sm mt-1 uppercase tracking-widest font-medium">Collections of my work</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all group"
+          >
+            <span className="text-2xl group-hover:rotate-90 transition-transform duration-300">✕</span>
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
+            {products.map((project, idx) => (
+              <motion.a
+                key={idx}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                className="group block relative"
+              >
+                <div className="aspect-video rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 group-hover:border-white/20 transition-all duration-500">
+                  <Image
+                    src={project.thumbnail}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+
+                  <div className="absolute bottom-6 left-6 right-6 transform group-hover:-translate-y-2 transition-transform duration-500">
+                    <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
+                    <p className="text-xs text-neutral-400 line-clamp-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      {project.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Area */}
+        <div className="p-6 border-t border-white/5 text-center bg-zinc-950/30">
+          <p className="text-[10px] text-neutral-600 tracking-[0.3em] uppercase">Developed by Relingga Aditya</p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
@@ -181,16 +297,16 @@ export const Header = () => {
             cursorBlinkDuration={0.5}
           />
 
-        <p className="w-full min-w-0 max-w-full md:max-w-xl text-sm md:text-base lg:text-lg text-white/70 break-words" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
-          I&apos;m a <span className="font-semibold text-white">Full Stack Developer</span> who
-          loves crafting clean interfaces, smooth animations, and scalable backends. Let&apos;s
-          build memorable digital experiences together.
-        </p>
+          <p className="w-full min-w-0 max-w-full md:max-w-xl text-sm md:text-base lg:text-lg text-white/70 break-words" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+            I&apos;m a <span className="font-semibold text-white">Full Stack Developer</span> who
+            loves crafting clean interfaces, smooth animations, and scalable backends. Let&apos;s
+            build memorable digital experiences together.
+          </p>
 
 
           <div className="flex flex-wrap  items-center gap-4 pt-2">
             <button
-        
+
               type="button"
               className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_18px_60px_rgba(15,23,42,0.8)] transition hover:-translate-y-0.5 hover:bg-neutral-100"
             >
@@ -235,6 +351,7 @@ export const ProductCard = ({
     title: string;
     link: string;
     thumbnail: string;
+    description: string;
   };
   translate: MotionValue<number>;
 }) => {
@@ -249,7 +366,6 @@ export const ProductCard = ({
       key={product.title}
       className="group/product h-96 w-[30rem] relative shrink-0"
     >
-
       <a
         href={product.link}
         className="block group-hover/product:shadow-2xl relative h-full w-full"
@@ -262,12 +378,16 @@ export const ProductCard = ({
           unoptimized
         />
       </a>
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none transition-opacity duration-300"></div>
 
-      <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white mt-2">
-        {product.title}
-      </h2>
-      
+      <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover/product:opacity-100 text-white transition-opacity duration-300">
+        <h2 className="font-bold text-2xl mb-2">
+          {product.title}
+        </h2>
+        <p className="text-sm text-gray-200">
+          {product.description}
+        </p>
+      </div>
     </motion.div>
   );
 };

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { useSkillsParallax } from "@/app/hook/SkillsSection/UseSkillsParallax";
 import { skillCategories, getTechLogoUrl } from "@/lib/utils/skills";
-import { FloatingParticles } from "@/components/ui/FloatingParticles";
+
 
 import { SkillsHeader } from "@/components/skills/SkillsHeader";
 import { SkillsCategoryCard } from "@/components/skills/SkillsCategoryCard";
@@ -82,7 +82,7 @@ const SkillsSection = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950/50 to-black z-0" />
     
 
-        <FloatingParticles opacity={opacity} />
+   
 
         {/* Main content container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 md:py-32 lg:py-40 pb-24 sm:pb-24 md:pb-32 lg:pb-40">

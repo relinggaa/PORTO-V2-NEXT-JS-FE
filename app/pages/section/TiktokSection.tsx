@@ -7,12 +7,13 @@ export default function TiktokSection() {
     <>
       <TextReveal>Amid a busy schedule, I create programming content on TikTok to share insights with a wider audience.</TextReveal>
          <div className="w-full overflow-hidden bg-black">
-         <div className="w-full h-[250vh] sm:h-[280vh] md:h-[300vh]">
+         <div className="w-full h-[140vh] md:h-[300vh]">
       <MacbookScroll
         title={
           <span hidden={true} className="text-white">
             ngisi props ajah
           </span>
+          
         }
         badge={
           <a href="https://peerlist.io/manuarora">

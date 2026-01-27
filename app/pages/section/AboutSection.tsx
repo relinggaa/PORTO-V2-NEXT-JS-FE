@@ -1,81 +1,16 @@
 "use client";
 import React from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-} from "motion/react";
+import { motion } from "motion/react";
 
 const AboutSection = () => {
-  const ref = React.useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
-
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]),
-    springConfig
-  );
-
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [100, -50]),
-    springConfig
-  );
-
-  const translateYReverse = useSpring(
-    useTransform(scrollYProgress, [0, 0.5], [-50, 100]),
-    springConfig
-  );
-
-  const scale = useSpring(
-    useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.9]),
-    springConfig
-  );
-
-
-
   return (
     <section
-      ref={ref}
       className="relative min-h-screen bg-black text-white overflow-hidden"
       id="about"
     >
-      {/* Background decorative elements with parallax */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          style={{ translateY, opacity: useTransform(opacity, (v) => v * 0.3) }}
-          className="absolute top-20 left-10 w-96 h-96 border border-white/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          style={{
-            translateY: translateYReverse,
-            opacity: useTransform(opacity, (v) => v * 0.2),
-          }}
-          className="absolute bottom-20 right-10 w-96 h-96 border border-white/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          style={{
-            translateY,
-            opacity: useTransform(opacity, (v) => v * 0.1),
-          }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full blur-3xl"
-        />
-      </div>
-
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 md:py-32 lg:py-40">
         {/* Section Header */}
-        <motion.div
-          style={{ opacity, scale }}
-          className="text-center mb-12 sm:mb-16 md:mb-20"
-        >
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -92,13 +27,10 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto"
           />
-        </motion.div>
+        </div>
 
         {/* Main Content - Centered Single Column */}
-        <motion.div
-          style={{ translateY, opacity }}
-          className="max-w-3xl mx-auto space-y-12"
-        >
+        <div className="max-w-3xl mx-auto space-y-12">
           {/* About Text Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -192,7 +124,7 @@ const AboutSection = () => {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

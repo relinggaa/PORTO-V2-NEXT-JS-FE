@@ -2,7 +2,7 @@ import InfiniteMenu from '@/components/InfiniteMenu'
 import interium from '@/public/img/interium.jpg'
 import intelecta from '@/public/img/intelecta.png'
 import hacksphere from '@/public/img/hacksphere.jpg'
-import React from 'react'
+import { TextReveal } from "@/components/ui/text-reveal";
 const items = [
   {
     image: interium.src,
@@ -33,10 +33,14 @@ const items = [
 ];
 export default function ExperienceSection() {
   return (
-    <section id="experience" className='min-h-[80vh] w-full pt-48 sm:pt-56 md:pt-64 pb-20 mt-8' style={{ position: 'relative', overflow: 'visible', zIndex: 1 }}>
-      <InfiniteMenu items={items}
-        scale={1}
-      />
-    </section>
+    <>
+      <TextReveal>Now..Let's see my experience</TextReveal>
+      <section id="experience" className='min-h-[80vh] w-full pt-48 sm:pt-56 md:pt-64 pb-20 mt-8' style={{ position: 'relative', overflow: 'visible', zIndex: 1 }}>
+        <InfiniteMenu items={items}
+          scale={1}
+        />
+      </section>
+    </>
+
   )
 }

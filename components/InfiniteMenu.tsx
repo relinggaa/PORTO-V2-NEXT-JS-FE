@@ -743,7 +743,7 @@ class InfiniteGridMenu {
 
     // Responsive scale logic
     if (window.innerWidth < 768) {
-      this.ITEM_SCALE = 0.9;
+      this.ITEM_SCALE = 0.7;
     } else {
       this.ITEM_SCALE = 0.7;
     }
@@ -1024,7 +1024,7 @@ class InfiniteGridMenu {
   private onControlUpdate(deltaTime: number): void {
     const timeScale = deltaTime / this.TARGET_FRAME_DURATION + 0.0001;
     let damping = 5 / timeScale;
-    let cameraTargetZ = 7 * this.scaleFactor;
+    let cameraTargetZ = 6 * this.scaleFactor;
 
     const isMoving = this.control.isPointerDown || Math.abs(this.smoothRotationVelocity) > 0.01;
 
@@ -1135,19 +1135,25 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0 }) => {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full ">
       <canvas
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
         className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
       />
 
+      {/* Bottom Gradient Overlay for readability */}
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-linear-to-t from-black via-black/40 to-transparent pointer-events-none z-10" />
+
       {activeItem && (
         <div className={`
           absolute
           left-0
+          bottom-0
           w-full
-          xl:bottom-[-3%]
+          z-20
+          px-6
+          pb-12 md:pb-20
           flex
           flex-col
           items-center
@@ -1159,36 +1165,33 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [], scale = 1.0 }) => {
             : 'opacity-100 pointer-events-auto duration-[500ms] translate-y-0'
           }
         `}>
-          <h2
-            className="
-              select-none
-              font-black
-              text-3xl md:text-6xl
-              text-center
-              mb-4
-              text-white
-              drop-shadow-lg
-              px-4
-            "
-          >
-            {activeItem.title}
-          </h2>
+          <div className="max-w-4xl w-full text-center space-y-4">
+            <h2
+              className="
+                select-none
+                font-black
+                text-3xl md:text-6xl
+                text-white
+                tracking-tighter
+                drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]
+              "
+            >
+              {activeItem.title}
+            </h2>
 
-          <p
-            className="
-              select-none
-              w-full
-              max-w-2xl
-              text-base md:text-lg
-              text-center
-              text-gray-200
-              px-6
-              leading-relaxed
-              drop-shadow-md
-            "
-          >
-            {activeItem.description}
-          </p>
+            <p
+              className="
+                select-none
+                text-base md:text-xl
+                text-neutral-300
+                font-light
+                leading-relaxed
+                drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]
+              "
+            >
+              {activeItem.description}
+            </p>
+          </div>
         </div>
       )}
     </div>

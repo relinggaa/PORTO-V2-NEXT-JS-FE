@@ -1,134 +1,175 @@
 "use client";
-import React from "react";
-import { motion } from "motion/react";
 
-const AboutSection = () => {
+import React, { useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import {
+  Code2,
+  Cpu,
+  Globe,
+  Sparkles,
+  User,
+  GraduationCap,
+  Zap,
+  Target
+} from "lucide-react";
+
+export default function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
   return (
     <section
-      className="relative min-h-screen bg-black text-white overflow-hidden"
+      ref={containerRef}
       id="about"
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen bg-black text-white py-24 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-b border-white/5"
     >
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-24 md:py-32 lg:py-40">
-        {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-b from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent tracking-tight"
-          >
-            ABOUT ME
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, width: 0 }}
-            whileInView={{ opacity: 1, width: "120px" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto"
-          />
-        </div>
+      {/* Floating Decorative Elements */}
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -200]) }}
+        className="absolute top-20 right-[10%] opacity-10 pointer-events-none"
+      >
+        <h2 className="text-[20vw] font-black outline-text text-transparent border-white/20 select-none leading-none" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}>
+          ABOUT
+        </h2>
+      </motion.div>
 
-        {/* Main Content - Centered Single Column */}
-        <div className="max-w-3xl mx-auto space-y-12">
-          {/* About Text Card */}
+      <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-center">
+        {/* Section Header */}
+        <div className="mb-20">
           <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 3, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.8 }}
+            className="flex items-center gap-4 mb-6"
+          >
+            <div className="h-px w-12 bg-white/50" />
+            <span className="text-sm uppercase tracking-[0.4em] font-medium text-white/50">Who I am</span>
+          </motion.div>
+
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md rounded-2xl p-8 sm:p-10 md:p-12 hover:border-white/20 transition-all duration-500 shadow-[0_8px_32px_0_rgba(255,255,255,0.05)] hover:shadow-[0_8px_32px_0_rgba(255,255,255,0.15)]"
+            transition={{ duration: 3, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.8 }}
+            className="text-5xl md:text-8xl font-bold tracking-tighter leading-none"
           >
-            {/* Decorative corner elements */}
-            <div className="absolute top-0 right-0 w-24 h-24 border-t border-r border-white/10 rounded-bl-full" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 border-b border-l border-white/10 rounded-tr-full" />
+            A BRAIN FOR CODE,<br />
+            <span className="text-neutral-500 italic font-light">HEART FOR DESIGN.</span>
+          </motion.h2>
+        </div>
 
-            <div className="relative z-10 space-y-6">
-              <motion.h3
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent"
-              >
-                Crafting Digital Experiences
-              </motion.h3>
-              <div className="space-y-4">
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-base sm:text-lg text-white/70 leading-relaxed"
-                >
-                  I&apos;m a passionate Full Stack Developer with a love for
-                  creating clean, efficient, and user-friendly applications. My
-                  journey in web development has been driven by curiosity and a
-                  desire to solve complex problems through elegant solutions.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="text-base sm:text-lg text-white/70 leading-relaxed"
-                >
-                  I specialize in building scalable applications that not only
-                  look great but also perform exceptionally. From frontend
-                  interfaces to backend systems, I bring ideas to life with
-                  attention to detail and modern best practices.
-                </motion.p>
+        {/* Modern Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
+
+          {/* Bio Card - Large */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="md:col-span-8 md:row-span-2 relative p-8 md:p-12 border border-white/10 bg-white/2 backdrop-blur-xl rounded-3xl group overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 p-6 opacity-20">
+              <Sparkles className="w-12 h-12" />
+            </div>
+            <div className="relative z-10 space-y-8">
+              <h3 className="text-3xl font-medium flex items-center gap-3">
+                <User className="w-6 h-6 text-white" />
+                Biography
+              </h3>
+              <div className="space-y-6 text-xl text-neutral-400 font-light leading-relaxed">
+                <p>
+                  I am a <span className="text-white font-normal underline decoration-white/20 underline-offset-8">Full Stack Developer</span> and software engineering student at Telkom University who thrives on turning complex ideas into digital realities.
+                </p>
+                <p>
+                  My approach combines technical rigor with a deep appreciation for aesthetics. I don't just write code; I craft systems that feel intuitive and look exceptional.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                {['Performance', 'Scalability', 'Intuitive UI', 'Clean Architecture'].map((pill) => (
+                  <span key={pill} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs uppercase tracking-widest text-neutral-500">
+                    {pill}
+                  </span>
+                ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Stats Grid */}
+          {/* Education Card - Small */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6"
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="md:col-span-4 relative p-8 border border-white/10 bg-white/2 backdrop-blur-xl rounded-3xl group overflow-hidden flex flex-col justify-between"
           >
+            <GraduationCap className="w-8 h-8 opacity-50 mb-4" />
+            <div>
+              <h4 className="text-lg font-bold mb-2 uppercase tracking-wider">Education</h4>
+              <p className="text-neutral-400 text-sm">Telkom University Student</p>
+              <p className="text-neutral-500 text-xs mt-2">Software Engineering</p>
+            </div>
+          </motion.div>
+
+          {/* Vision Card - Small */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="md:col-span-4 relative p-8 border border-white/10 bg-white/2 backdrop-blur-xl rounded-3xl group overflow-hidden flex flex-col justify-between"
+          >
+            <Target className="w-8 h-8 opacity-50 mb-4 text-white" />
+            <div>
+              <h4 className="text-lg font-bold mb-2 uppercase tracking-wider">Vision</h4>
+              <p className="text-neutral-400 text-sm italic">"Simplifying complexity through elegant software."</p>
+            </div>
+          </motion.div>
+
+          {/* Stats Bar - Wide */}
+          <div className="md:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
             {[
-              { number: "50+", label: "Projects Completed" },
-              { number: "3+", label: "Years Experience" },
-              { number: "100%", label: "Client Satisfaction" },
-              { number: "24/7", label: "Available" },
+              { number: "50+", label: "Projects Completed", icon: Code2 },
+              { number: "2+", label: "Academic Years", icon: Zap },
+              { number: "100%", label: "System Uptime", icon: Globe },
+              { number: "24/7", label: "Always Available", icon: Cpu },
             ].map((stat, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                className="group relative border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-6 rounded-xl hover:border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 + index * 0.1, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
+                className="p-8 border border-white/10 bg-white/1 rounded-3xl hover:bg-white/4 transition-colors"
               >
-                {/* Hover effect */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="relative z-10">
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                    className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-b from-white to-neutral-300 bg-clip-text text-transparent"
-                  >
-                    {stat.number}
-                  </motion.div>
-                  <div className="text-xs sm:text-sm text-white/60 leading-tight">
-                    {stat.label}
-                  </div>
+                <stat.icon className="w-5 h-5 mb-4 text-neutral-600" />
+                <div className="text-4xl font-bold tracking-tighter mb-1">{stat.number}</div>
+                <div className="text-xs uppercase tracking-widest text-neutral-500 font-medium">
+                  {stat.label}
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
+
         </div>
       </div>
     </section>
   );
-};
-
-export default AboutSection;
-
+}

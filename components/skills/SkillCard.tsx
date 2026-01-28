@@ -16,7 +16,6 @@ export const SkillCard = ({
   skillIndex,
 }: SkillCardProps) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
   const mouseX = useMotionValue(0);
@@ -32,125 +31,57 @@ export const SkillCard = ({
     setMousePosition({ x, y });
   };
 
-  const rotateX = useTransform(mouseY, [0, 100], [3, -3]);
-  const rotateY = useTransform(mouseX, [0, 100], [-3, 3]);
+  const rotateX = useTransform(mouseY, [0, 100], [10, -10]);
+  const rotateY = useTransform(mouseX, [0, 100], [-10, 10]);
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 30, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{
-        duration: 0.5,
+        duration: 0.6,
         delay: categoryIndex * 0.1 + skillIndex * 0.05,
         type: "spring",
-        stiffness: 200,
-        damping: 20,
+        stiffness: 100,
       }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        mouseX.set(50);
-        mouseY.set(50);
-      }}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      whileHover={{
-        scale: 1.05,
-        z: 50,
-      }}
-      className="relative perspective-1000"
+      className="relative group/skill"
     >
-      <div className="relative border border-white/10 bg-gradient-to-br from-black/80 via-neutral-900/50 to-black/80 backdrop-blur-sm p-5 rounded-2xl hover:border-white/30 transition-all duration-500 cursor-pointer group/skill overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-white/10">
-        {/* Animated gradient border on hover */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover/skill:opacity-100"
+      <motion.div
+        style={{ rotateX, rotateY, perspective: 1000 }}
+        whileHover={{ scale: 1.1, y: -5 }}
+        className="relative border border-white/5 bg-white/5 backdrop-blur-xl p-4 rounded-2xl transition-colors duration-500 group-hover/skill:border-white/20 overflow-hidden"
+      >
+        {/* Hover Highlight */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.1), transparent 70%)`,
-          }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {/* Glow effect on hover */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl opacity-0 group-hover/skill:opacity-100 bg-gradient-to-br from-white/10 via-transparent to-transparent blur-xl transition-opacity duration-500"
-        />
-
-        {/* Shimmer line */}
-        <motion.div
-          className="absolute inset-0 opacity-0 group-hover/skill:opacity-100"
-          style={{
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)",
-            transform: "translateX(-100%)",
-          }}
-          animate={isHovered ? {
-            transform: ["translateX(-100%)", "translateX(100%)"],
-          } : {}}
-          transition={{
-            duration: 1,
-            repeat: isHovered ? Infinity : 0,
-            repeatDelay: 2,
+            background: `radial-gradient(100px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.1), transparent 70%)`
           }}
         />
 
-        <div className="relative z-10 flex flex-col items-center gap-3">
-          {/* Icon with enhanced animation */}
-          <motion.div
-            whileHover={{
-              rotate: [0, -5, 5, -5, 0],
-              scale: 1.15,
-            }}
-            transition={{ 
-              duration: 0.5, 
-              type: "tween",
-              ease: "easeInOut"
-            }}
-            className="relative w-14 h-14 flex items-center justify-center"
-          >
-            <motion.div
-              className="absolute inset-0 rounded-full bg-white/5 opacity-0 group-hover/skill:opacity-100"
-              animate={isHovered ? {
-                scale: [1, 1.5, 1],
-                opacity: [0, 0.5, 0],
-              } : {}}
-              transition={{ duration: 1.5, repeat: isHovered ? Infinity : 0 }}
-            />
+        <div className="flex flex-col items-center gap-3 relative z-10">
+          {/* Logo Container */}
+          <div className="relative w-12 h-12 flex items-center justify-center">
             <Image
               src={getTechLogoUrl(skill.name)}
               alt={skill.name}
-              width={56}
-              height={56}
-              className="w-14 h-14 object-contain filter brightness-0 invert opacity-80 group-hover/skill:opacity-100 transition-opacity duration-300"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain filter brightness-0 invert opacity-40 group-hover/skill:opacity-100 transition-all duration-300 group-hover/skill:scale-110"
               unoptimized
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                const fallbackName = skill.name.toLowerCase().replace(/\s+/g, "").replace("js", "");
-                target.src = `https://cdn.simpleicons.org/${fallbackName}/white`;
-              }}
             />
-          </motion.div>
+          </div>
 
-          {/* Skill name with better typography */}
-          <motion.span
-            className="text-sm font-semibold text-white/90 group-hover/skill:text-white transition-colors text-center"
-            whileHover={{ scale: 1.05 }}
-          >
-            {skill.name}
-          </motion.span>
+          {/* Skill Name */}
+          <div className="flex flex-col items-center">
+            <span className="text-[11px] font-bold text-white/70 group-hover/skill:text-white transition-colors text-center truncate w-full">
+              {skill.name}
+            </span>
+          </div>
         </div>
-
-        {/* Corner accent */}
-        <motion.div
-          className="absolute top-0 right-0 w-16 h-16 border-t border-r border-white/5 rounded-bl-full opacity-0 group-hover/skill:opacity-100 transition-opacity duration-500"
-        />
-        <motion.div
-          className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-white/5 rounded-tr-full opacity-0 group-hover/skill:opacity-100 transition-opacity duration-500"
-        />
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

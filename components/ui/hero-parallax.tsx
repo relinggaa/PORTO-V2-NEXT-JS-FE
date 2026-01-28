@@ -251,10 +251,12 @@ export const HeroParallax = ({
       </div>
 
       <motion.div
+        id="projects"
         style={{ opacity: useSpring(useTransform(scrollYProgress, [0, 0.2], [0, 1]), springConfig) }}
         className="absolute bottom-10 left-0 w-full flex justify-center z-50"
       >
         <button
+
           onClick={openModal}
           className="px-12 py-4 bg-white text-black font-bold rounded-full hover:bg-neutral-200 transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)]"
         >
@@ -288,6 +290,7 @@ const ProjectModal = ({
 
   return (
     <motion.div
+
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -418,6 +421,7 @@ export const ProductCard = ({
 }) => {
   return (
     <motion.div
+
       style={{
         x: translate,
       }}

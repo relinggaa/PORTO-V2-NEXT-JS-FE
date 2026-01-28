@@ -4,6 +4,8 @@ import SkillsSection from "./section/SkillsSection";
 import TiktokSection from "./section/TiktokSection";
 import NavbarLanding from "@/components/ui/NavbarLanding";
 import ExperienceSection from "./section/ExperienceSection";
+import FooterSection from "./section/FooterSection";
+
 const LandingPage = () => {
   return (
     <div className="bg-black text-white">
@@ -13,6 +15,7 @@ const LandingPage = () => {
       <SkillsSection />
       <TiktokSection />
       <ExperienceSection />
+      <FooterSection />
     </div>
   );
 };

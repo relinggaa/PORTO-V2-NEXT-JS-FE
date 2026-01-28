@@ -17,6 +17,94 @@ import { useProjectModal } from "@/app/hook/ProjectModal/useProjectModal";
 
 
 
+const ProjectModalItem = ({ project, idx }: { project: any; idx: number }) => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.05 }}
+      className="group block relative"
+    >
+      <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-white/5 bg-black group-hover:border-white/20 transition-all duration-500 relative">
+        <Image
+          src={project.thumbnail}
+          alt={project.title}
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-30"
+          unoptimized
+        />
+
+        {/* Layer Gradasi & Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-100" />
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Konten Default (Title & Short Desc) */}
+        <div className="absolute bottom-6 left-6 right-6 transform group-hover:-translate-y-2 transition-transform duration-500 z-10">
+          <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              {project.description}
+            </p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsExpanded(true);
+              }}
+              className="w-fit text-[10px] font-black tracking-widest text-white/40 hover:text-white uppercase mt-1 opacity-0 group-hover:opacity-100 transition-all duration-500 border-b border-white/0 hover:border-white/40"
+            >
+              Learn More →
+            </button>
+          </div>
+        </div>
+
+        {/* MODERN DETAIL OVERLAY (Show More View) */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="absolute inset-0 z-30 bg-black/95 backdrop-blur-2xl p-6 flex flex-col justify-between"
+            >
+              <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 pt-2">
+                <div className="flex justify-between items-start mb-4">
+                  <h4 className="text-xl font-black italic text-white tracking-tighter">
+                    {project.title}
+                  </h4>
+                  <button
+                    onClick={() => setIsExpanded(false)}
+                    className="p-2 hover:bg-white/10 rounded-full transition-colors flex items-center justify-center w-8 h-8"
+                  >
+                    <span className="text-white text-xs">✕</span>
+                  </button>
+                </div>
+                <p className="text-sm text-neutral-400 leading-relaxed font-medium">
+                  {project.description}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-black px-6 py-2 rounded-full text-xs font-bold hover:scale-105 transition-transform"
+                >
+                  VISIT SITE
+                </a>
+                <span className="text-[10px] text-neutral-600 font-bold tracking-[0.2em] uppercase">Project Detail</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+};
+
 export const HeroParallax = ({
   products,
 }: {
@@ -228,34 +316,7 @@ const ProjectModal = ({
         <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
             {products.map((project, idx) => (
-              <motion.a
-                key={idx}
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                className="group block relative"
-              >
-                <div className="aspect-video rounded-2xl overflow-hidden border border-white/5 bg-zinc-900 group-hover:border-white/20 transition-all duration-500">
-                  <Image
-                    src={project.thumbnail}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-
-                  <div className="absolute bottom-6 left-6 right-6 transform group-hover:-translate-y-2 transition-transform duration-500">
-                    <h4 className="text-xl font-bold text-white mb-2">{project.title}</h4>
-                    <p className="text-xs text-neutral-400 line-clamp-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.a>
+              <ProjectModalItem key={idx} project={project} idx={idx} />
             ))}
           </div>
         </div>

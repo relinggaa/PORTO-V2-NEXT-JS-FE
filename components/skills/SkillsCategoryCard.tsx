@@ -75,7 +75,6 @@ export const SkillsCategoryCard = ({
           <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
               <div className="flex flex-col">
-                <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 mb-1 font-bold">Category {String(categoryIndex + 1).padStart(2, '0')}</span>
                 <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase italic">
                   {category.title}
                 </h3>

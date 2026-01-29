@@ -14,33 +14,14 @@ import {
 } from "lucide-react";
 
 export default function AboutSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
 
   return (
     <section
-      ref={containerRef}
       id="about"
-      onMouseMove={handleMouseMove}
       className="relative min-h-screen bg-black text-white py-24 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-b border-white/5"
     >
       {/* Floating Decorative Elements */}
       <motion.div
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -200]) }}
         className="absolute top-20 right-[10%] opacity-10 pointer-events-none"
       >
         <h2 className="text-[20vw] font-black outline-text text-transparent border-white/20 select-none leading-none" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}>

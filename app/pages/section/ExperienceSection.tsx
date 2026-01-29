@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import InfiniteMenu from '@/components/InfiniteMenu'
+import InfiniteMenu from '@/components/ui/InfiniteMenu'
 import interium from '@/public/img/interium.jpg'
 import intelecta from '@/public/img/intelecta.png'
 import hacksphere from '@/public/img/hacksphere.jpg'

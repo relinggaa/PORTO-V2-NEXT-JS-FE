@@ -229,7 +229,8 @@ export const HeroParallax = ({
               />
             ))}
           </motion.div>
-          <motion.div className="flex flex-row  mb-20 space-x-20 ">
+          <motion.div className="flex flex-row  mb-20 space-x-20 " >
+
             {secondRow.map((product) => (
               <ProductCard
                 product={product}
@@ -238,7 +239,7 @@ export const HeroParallax = ({
               />
             ))}
           </motion.div>
-          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+          <motion.div className="flex flex-row-reverse space-x-reverse space-x-20" id="projects">
             {thirdRow.map((product) => (
               <ProductCard
                 product={product}
@@ -251,7 +252,7 @@ export const HeroParallax = ({
       </div>
 
       <motion.div
-        id="projects"
+
         style={{ opacity: useSpring(useTransform(scrollYProgress, [0, 0.2], [0, 1]), springConfig) }}
         className="absolute bottom-10 left-0 w-full flex justify-center z-50"
       >
@@ -369,20 +370,20 @@ export const Header = () => {
 
 
           <div className="flex flex-wrap  items-center gap-4 pt-2">
-            <button
+            <a href="#projects"
 
               type="button"
               className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-[0_18px_60px_rgba(15,23,42,0.8)] transition hover:-translate-y-0.5 hover:bg-neutral-100"
             >
               View Projects
-            </button>
-            <button
+            </a>
+            <a href="#contact"
               type="button"
               className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white/80 backdrop-blur-md transition hover:border-white/40 hover:bg-white/10"
             >
               Contact Me
               <span className="text-lg leading-none">↗</span>
-            </button>
+            </a>
           </div>
         </div>
 

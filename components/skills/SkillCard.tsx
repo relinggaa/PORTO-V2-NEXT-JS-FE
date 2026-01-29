@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
-import { motion, useTransform, useMotionValue, useInView } from "motion/react";
+import { motion, useTransform, useMotionValue, useInView, useMotionTemplate, useSpring } from "motion/react";
 import { getTechLogoUrl, Skill } from "@/lib/utils/skills";
 
 interface SkillCardProps {
@@ -15,24 +15,31 @@ export const SkillCard = ({
   categoryIndex,
   skillIndex,
 }: SkillCardProps) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+
+  // Initialize at 50 to have 0 rotation by default
+  const mouseX = useMotionValue(50);
+  const mouseY = useMotionValue(50);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
     mouseX.set(x);
     mouseY.set(y);
-    setMousePosition({ x, y });
   };
 
-  const rotateX = useTransform(mouseY, [0, 100], [10, -10]);
-  const rotateY = useTransform(mouseX, [0, 100], [-10, 10]);
+  const handleMouseLeave = () => {
+    mouseX.set(50);
+    mouseY.set(50);
+  };
+
+  const springConfig = { damping: 20, stiffness: 150 };
+  const rotateX = useSpring(useTransform(mouseY, [0, 100], [10, -10]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [0, 100], [-10, 10]), springConfig);
+  const highlightBackground = useMotionTemplate`radial-gradient(100px circle at ${mouseX}% ${mouseY}%, rgba(255,255,255,0.1), transparent 70%)`;
 
   return (
     <motion.div
@@ -46,18 +53,18 @@ export const SkillCard = ({
         stiffness: 100,
       }}
       onMouseMove={handleMouseMove}
-      className="relative group/skill"
+      onMouseLeave={handleMouseLeave}
+      className="relative group/skill h-full"
     >
       <motion.div
         style={{ rotateX, rotateY, perspective: 1000 }}
-        whileHover={{ scale: 1.1, y: -5 }}
-        className="relative border border-white/5 bg-white/5 backdrop-blur-xl p-4 rounded-2xl transition-colors duration-500 group-hover/skill:border-white/20 overflow-hidden"
+        className="relative border border-white/5 bg-white/5 backdrop-blur-xl p-4 rounded-2xl transition-colors duration-500 group-hover/skill:border-white/20 overflow-hidden h-full flex flex-col justify-center"
       >
         {/* Hover Highlight */}
-        <div
+        <motion.div
           className="absolute inset-0 opacity-0 group-hover/skill:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `radial-gradient(100px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.1), transparent 70%)`
+            background: highlightBackground
           }}
         />
 

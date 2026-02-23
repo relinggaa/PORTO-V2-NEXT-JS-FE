@@ -23,10 +23,10 @@ const NavbarLanding = () => {
               transition={{ duration: 0.5 }}
               className="shrink-0 flex items-center"
             >
-              <Image 
-                src={logo} 
-                alt="logo" 
-                width={150} 
+              <Image
+                src={logo}
+                alt="Relingga Aditya - Full Stack Developer Logo"
+                width={150}
                 height={100}
                 className="h-28 sm:h-24 md:h-28 lg:h-32 xl:h-36 w-auto mt-5"
                 priority
@@ -96,10 +96,10 @@ const NavbarLanding = () => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-20"
                 >
-                  <Image 
-                    src={logo} 
-                    alt="logo" 
-                    width={300} 
+                  <Image
+                    src={logo}
+                    alt="Relingga Aditya - Full Stack Developer Logo"
+                    width={300}
                     height={100}
                     className="h-24 sm:h-32 md:h-40 lg:h-48 xl:h-56 w-auto max-w-[90vw] sm:max-w-none"
                     priority
@@ -144,8 +144,8 @@ const NavbarLanding = () => {
                       transition={{ duration: 0.5, delay: 0.4 }}
                       className="space-y-3"
                     >
-                
-                
+
+
                     </motion.div>
 
                     {/* Email Info */}
@@ -218,7 +218,7 @@ const NavbarLanding = () => {
                   className="absolute bottom-0 right-0 pointer-events-none overflow-hidden"
                 >
                   <h1 className="text-[12vw] sm:text-[15vw] md:text-[12vw] lg:text-[10vw] xl:text-[8vw] font-bold uppercase tracking-tight leading-none select-none pr-2 sm:pr-4">
-                  {user.name}
+                    {user.name}
                   </h1>
                 </motion.div>
               </div>

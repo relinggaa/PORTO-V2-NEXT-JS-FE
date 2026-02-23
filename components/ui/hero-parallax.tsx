@@ -352,15 +352,18 @@ export const Header = () => {
             Available for freelance & collaborations
           </div>
 
-          <TextType
-            text={["WELCOME TO MY PORTOFOLIO", "LET'S EXPLORE MY WORLD"]}
-            typingSpeed={75}
-            pauseDuration={1500}
-            showCursor
-            cursorCharacter="_"
-            deletingSpeed={50}
-            cursorBlinkDuration={0.5}
-          />
+          <div className="space-y-2">
+            <h1 className="sr-only">Relingga Aditya - Full Stack Developer Portfolio</h1>
+            <TextType
+              text={["WELCOME TO MY PORTOFOLIO", "LET'S EXPLORE MY WORLD", "I'M RELINGGA ADITYA"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              showCursor
+              cursorCharacter="_"
+              deletingSpeed={50}
+              cursorBlinkDuration={0.5}
+            />
+          </div>
 
           <p className="w-full min-w-0 max-w-full md:max-w-xl text-sm md:text-base lg:text-lg text-white/70 break-words" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
             I&apos;m a <span className="font-semibold text-white">Full Stack Developer</span> who

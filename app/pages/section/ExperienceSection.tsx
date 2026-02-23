@@ -6,7 +6,9 @@ import InfiniteMenu from '@/components/ui/InfiniteMenu'
 import interium from '@/public/img/interium.jpg'
 import intelecta from '@/public/img/intelecta.png'
 import hacksphere from '@/public/img/hacksphere.jpg'
+import chevalier from '@/public/img/chevalier.png'
 import { MoveRight } from "lucide-react";
+import Courosel from "@/components/ui/Courosel";
 
 const items = [
   {
@@ -28,7 +30,13 @@ const items = [
     description: 'I participated in a hackathon competition called Hacksphere, which was held at President University. The event was supported by KAI, and the competition focused on developing applications for KAI Access.This is pretty cool, right?'
   },
   {
-    image: "https://media.licdn.com/dms/image/v2/D562DAQHM1ShII_YqUw/profile-treasury-image-shrink_800_800/B56ZZwHByxGkAY-/0/1745637614008?e=1770145200&v=beta&t=krlavivbp0_Mh-3uCzhZygQVQQ_2OAIDDEvrKM4AUfs",
+    image: chevalier.src,
+    link: 'https://google.com/',
+    title: 'HACKSPHERE 2025',
+    description: 'I was a member of the Chevalier Study Group at Telkom University, specifically in the Front-End division.'
+  },
+  {
+    image: "https://media.licdn.com/dms/image/v2/D562DAQHM1ShII_YqUw/profile-treasury-image-shrink_800_800/B56ZZwHByxGkAY-/0/1745637614008?e=1772416800&v=beta&t=rmYSx36EqrSo8M5rLxJFFWo-d_E7DExd4ohZpps7-oM",
     link: 'https://google.com/',
     title: 'Full Stack Developer',
     description: 'The Bookkeeping Management System (BMS) is a university-based system for managing finance, inventory, and administration, designed to improve efficiency in learning and laboratory operations.'
@@ -90,7 +98,7 @@ export default function ExperienceSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2 }}
           viewport={{ once: true }}
-          className="relative w-full h-[800px] md:h-[850px] rounded-3xl overflow-hidden border border-white/10 bg-linear-to-b from-white/2 to-transparent cursor-grab active:cursor-grabbing shadow-2xl"
+          className="relative w-full h-[600px] md:h-[650px] rounded-3xl overflow-hidden border border-white/10 bg-linear-to-b from-white/2 to-transparent cursor-grab active:cursor-grabbing shadow-2xl"
         >
           {/* Subtle overlay corners */}
           <div className="absolute top-8 left-8 w-16 h-16 border-t border-l border-white/20 rounded-tl-xl pointer-events-none z-20" />
@@ -98,7 +106,7 @@ export default function ExperienceSection() {
           <div className="absolute bottom-8 left-8 w-16 h-16 border-b border-l border-white/20 rounded-bl-xl pointer-events-none z-20" />
           <div className="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-white/20 rounded-br-xl pointer-events-none z-20" />
 
-          <InfiniteMenu items={items} scale={1} />
+          <Courosel items={items} />
         </motion.div>
       </div>
     </section>

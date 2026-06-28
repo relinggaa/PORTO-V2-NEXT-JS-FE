@@ -5,16 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { IconMail, IconLock } from "@tabler/icons-react";
+import { IconMail, IconLock, IconLoader2 } from "@tabler/icons-react";
+import { useLogin } from "@/app/hook/query/useLogin";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const loginMutation = useLogin();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login with:", email, password);
-    // TODO: Implement actual login logic
+    loginMutation.mutate({ email, password });
   };
 
   return (
@@ -25,6 +26,11 @@ export function LoginForm() {
           Enter your email and password to sign in
         </CardDescription>
       </CardHeader>
+      {loginMutation.isError && (
+        <div className="px-6 pb-2 text-sm text-red-500 text-center">
+          {(loginMutation.error as any)?.response?.data?.message || 'Login failed. Please check your credentials.'}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4 pt-4">
           <div className="space-y-2 relative">
@@ -64,8 +70,13 @@ export function LoginForm() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4 mt-2">
-          <Button type="submit" className="w-full font-semibold shadow-lg hover:shadow-primary/25 transition-all">
-            Sign In
+          <Button 
+            type="submit" 
+            className="w-full font-semibold shadow-lg hover:shadow-primary/25 transition-all"
+            disabled={loginMutation.isPending}
+          >
+            {loginMutation.isPending ? <IconLoader2 className="animate-spin w-5 h-5 mr-2" /> : null}
+            {loginMutation.isPending ? "Signing In..." : "Sign In"}
           </Button>
           <div className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}

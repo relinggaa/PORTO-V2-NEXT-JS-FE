@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import logo from "../../public/img/logo-relingga.png";
+import { useLogout } from "@/app/hook/query/useLogout";
+import { useGetMe } from "@/app/hook/query/useGetMe";
 import {
   IconLayoutDashboard,
   IconBriefcase,
@@ -25,6 +27,13 @@ const navItems = [
 export const DashboardSidebar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const logoutMutation = useLogout();
+  const { data: user, isLoading } = useGetMe();
+
+  const getInitials = (username: string) => {
+    if (!username) return "U";
+    return username.substring(0, 2).toUpperCase();
+  };
 
   return (
     <>
@@ -92,20 +101,25 @@ export const DashboardSidebar = () => {
           <div className="flex items-center justify-between bg-white/5 border border-white/10 p-2 rounded-2xl transition-colors hover:border-white/20">
             <div className="flex items-center gap-3 overflow-hidden">
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                <span className="text-white font-bold text-sm tracking-wider">RA</span>
+                <span className="text-white font-bold text-sm tracking-wider">
+                  {isLoading ? "..." : getInitials(user?.username)}
+                </span>
               </div>
               <div className="flex flex-col overflow-hidden pr-2">
-                <span className="text-sm font-semibold text-white truncate">Relingga Aditya</span>
+                <span className="text-sm font-semibold text-white truncate">
+                  {isLoading ? "Loading..." : (user?.username || "Guest")}
+                </span>
                 <span className="text-xs text-white/40 truncate">Administrator</span>
               </div>
             </div>
-            <Link
-              href="/login"
-              className="p-2 text-white/50 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all shrink-0"
+            <button
+              onClick={() => logoutMutation.mutate()}
+              disabled={logoutMutation.isPending}
+              className="p-2 text-white/50 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all shrink-0 cursor-pointer disabled:opacity-50"
               title="Logout"
             >
               <IconLogout className="w-5 h-5" />
-            </Link>
+            </button>
           </div>
         </div>
       </aside>

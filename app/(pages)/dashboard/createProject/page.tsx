@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { IconPlus, IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconPlus, IconEdit, IconTrash, IconX } from "@tabler/icons-react";
 import { Modal } from "@/components/ui/Modal";
 import { Input, Textarea, Button } from "@/components/ui/Forms";
 import { DashboardPageHeader } from "@/components/ui/DashboardPageHeader";
@@ -39,6 +39,25 @@ export default function CreateProjectPage() {
     link: "",
     techStack: "",
   });
+
+  const [currentTech, setCurrentTech] = useState("");
+
+  const handleAddTech = () => {
+    if (currentTech.trim()) {
+      const currentStack = formData.techStack ? formData.techStack.split(",").map(t => t.trim()).filter(Boolean) : [];
+      if (!currentStack.includes(currentTech.trim())) {
+        currentStack.push(currentTech.trim());
+        setFormData({ ...formData, techStack: currentStack.join(", ") });
+      }
+      setCurrentTech("");
+    }
+  };
+
+  const handleRemoveTech = (indexToRemove: number) => {
+    const currentStack = formData.techStack.split(",").map(t => t.trim()).filter(Boolean);
+    const newStack = currentStack.filter((_, idx) => idx !== indexToRemove);
+    setFormData({ ...formData, techStack: newStack.join(", ") });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,13 +168,41 @@ export default function CreateProjectPage() {
             onChange={(e) => setFormData({ ...formData, link: e.target.value })}
             required
           />
-          <Input
-            label="Tech Stack (comma separated)"
-            placeholder="React, Node.js, MongoDB"
-            value={formData.techStack}
-            onChange={(e) => setFormData({ ...formData, techStack: e.target.value })}
-            required
-          />
+          <div className="flex flex-col gap-1.5 w-full">
+            <label className="text-sm font-medium text-white/70">Tech Stack</label>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Masukkan tech stack (contoh: Next.js)"
+                value={currentTech}
+                onChange={(e) => setCurrentTech(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddTech();
+                  }
+                }}
+              />
+              <Button type="button" onClick={handleAddTech} className="shrink-0">
+                Tambah
+              </Button>
+            </div>
+            {formData.techStack && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {formData.techStack.split(",").filter((t) => t.trim() !== "").map((tech, idx) => (
+                  <div key={idx} className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-full text-sm text-white border border-white/10">
+                    <span>{tech.trim()}</span>
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveTech(idx)}
+                      className="text-white/50 hover:text-white transition-colors flex items-center justify-center rounded-full hover:bg-white/10 p-0.5"
+                    >
+                      <IconX className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           
           <div className="flex justify-end gap-3 mt-4 pt-4 border-t border-white/10">
             <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>

@@ -1,10 +1,10 @@
-import HomeSection from "./section/HomeSection";
-import AboutSection from "./section/AboutSection";
-import SkillsSection from "./section/SkillsSection";
-import TiktokSection from "./section/TiktokSection";
+import HomeSection from "../../section/HomeSection";
+import AboutSection from "../../section/AboutSection";
+import SkillsSection from "../../section/SkillsSection";
+import TiktokSection from "../../section/TiktokSection";
 import NavbarLanding from "@/components/ui/NavbarLanding";
-import ExperienceSection from "./section/ExperienceSection";
-import FooterSection from "./section/FooterSection";
+import ExperienceSection from "../../section/ExperienceSection";
+import FooterSection from "../../section/FooterSection";
 
 const LandingPage = () => {
   return (
